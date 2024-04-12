@@ -13,6 +13,8 @@ namespace P007_SuperShopWEB.MVC5.Data.Entities
         //[Key]
         //public int IdTest { get; set; }
 
+        [Required]
+        [MaxLength(50, ErrorMessage ="The field {0} can contains {1} characteres lenght")]
         public string Name { get; set; }
 
         // não usa este formato em modo de edição
@@ -24,10 +26,10 @@ namespace P007_SuperShopWEB.MVC5.Data.Entities
         public string ImageUrl { get; set; }
 
         [Display(Name = "Last Purchase")]
-        public DateTime LastPurchase { get; set; }
+        public DateTime? LastPurchase { get; set; }
 
         [Display(Name = "Last Sale")]
-        public DateTime LastSale { get; set; }
+        public DateTime? LastSale { get; set; }
 
         [Display(Name = "Is Available")]
         public bool IsAvailable { get; set; }
