@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>P007_SuperShopWEB.MVC5</RootNamespace>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+    <UserSecretsId>6442b437-a248-4b82-96e7-c75ce1d16e6d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

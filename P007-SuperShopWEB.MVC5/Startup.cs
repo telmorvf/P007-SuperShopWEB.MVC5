@@ -1,4 +1,3 @@
-using P007_SuperShopWEB.MVC5.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using P007_SuperShopWEB.MVC5.Data;
 
 
 namespace P007_SuperShopWEB.MVC5
@@ -32,21 +32,12 @@ namespace P007_SuperShopWEB.MVC5
                 cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            //Estes são os services mais comuns
-            // AddTransient - usar e deitar fora, deixa de estar em memória, nunca mais posso usar o objeto.
-            // Quando alguém perguntar pelo SeedDb, tu vais cria-lo na fabrica, só passo a classe ()
-            services.AddTransient<SeedDb>();
+            services.AddTransient<SeedDb>();                    // O objeto só é criado uma única vez
+            services.AddScoped<IRepository, Repository>();      // Objeto é criado e apagado n vezes
+            //services.AddScoped<IRepository, MockRepository>();// troco rapidamente o repositorio
+            //services.AddSingleton<>                           // Objeto fica sempre criado
 
             services.AddControllersWithViews();
-
-            // AddSingleton - o objeto é criado e vai estar sempre em memória,
-            // fica no ciclo de vida da aplicação geralmente é pouco usado pq ocupa muita memória
-            //services.AddSingleton<SeedDb>();
-
-            // AddScoped - qualquer objeto que criar aqui fica criado e instanciado
-            // quando criar um novo do mesmo tipo, apaga o anterior e sobrepõe o novo por cima do antigo
-            // É aqui que configuro a injeção de dependencias
-            //services.AddScoped<SeedDb>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
