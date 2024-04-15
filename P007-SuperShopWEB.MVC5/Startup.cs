@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using P007_SuperShopWEB.MVC5.Data;
+using P007_SuperShopWEB.MVC5.Data.Repositories;
 
 
 namespace P007_SuperShopWEB.MVC5
@@ -32,10 +33,10 @@ namespace P007_SuperShopWEB.MVC5
                 cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddTransient<SeedDb>();                    // O objeto só é criado uma única vez
-            services.AddScoped<IRepository, Repository>();      // Objeto é criado e apagado n vezes
-            //services.AddScoped<IRepository, MockRepository>();// troco rapidamente o repositorio
-            //services.AddSingleton<>                           // Objeto fica sempre criado
+            services.AddTransient<SeedDb>();                                // O objeto só é criado uma única vez
+            services.AddScoped<IProductRepository, ProductRepository>();   // Objeto é criado e apagado n vezes
+            //services.AddScoped<IRepository, MockRepository>();            // troco rapidamente o repositorio
+            //services.AddSingleton<>                                       // Objeto fica sempre criado
 
             services.AddControllersWithViews();
         }
