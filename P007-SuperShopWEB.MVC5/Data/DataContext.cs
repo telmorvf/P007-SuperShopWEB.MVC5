@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using P007_SuperShopWEB.MVC5.Data.Entities;
 
 namespace P007_SuperShopWEB.MVC5.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<User>
     {
         // propriedade responsável pela tabela
         public DbSet<Product> Products { get; set; }

@@ -1,25 +1,31 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using P007_SuperShopWEB.MVC5.Data.Entities;
 using P007_SuperShopWEB.MVC5.Data.Repositories;
+using P007_SuperShopWEB.MVC5.Helpers;
 
 namespace P007_SuperShopWEB.MVC5.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly IProductRepository _productRepository;
+        private readonly IUserHelper _userHelper;
 
         // 1 Constructor
-        public ProductsController(IProductRepository productRepository)
+        public ProductsController(
+            IProductRepository productRepository,
+            IUserHelper userHelper)
         {
             _productRepository = productRepository;
+            _userHelper = userHelper;
         }
 
-        // GET: Products
+        // GET: Products, ordered by name
         public IActionResult Index()
         {
-            return View(_productRepository.GetAll());
+            return View(_productRepository.GetAll().OrderBy(p => p.Name));
         }
 
         // GET: Products/Details/5
@@ -53,6 +59,8 @@ namespace P007_SuperShopWEB.MVC5.Controllers
         {
             if (ModelState.IsValid)
             {
+                // TODO Modificar para o user que estiver logado
+                product.User = await _userHelper.GetUserByEmailAsync("telmorf@yopmail.com");
                 await _productRepository.CreateAsync(product);
                 return RedirectToAction(nameof(Index));
             }
@@ -91,6 +99,8 @@ namespace P007_SuperShopWEB.MVC5.Controllers
             {
                 try
                 {
+                    // TODO Modificar para o user que estiver logado
+                    product.User = await _userHelper.GetUserByEmailAsync("telmorf@yopmail.com");
                     await _productRepository.UpdateAsync(product);
                 }
                 catch (DbUpdateConcurrencyException)
