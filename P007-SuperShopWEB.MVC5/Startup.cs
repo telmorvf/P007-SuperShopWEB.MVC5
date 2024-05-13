@@ -47,7 +47,7 @@ namespace P007_SuperShopWEB.MVC5
                 cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddTransient<SeedDb>();    
+            services.AddTransient<SeedDb>();                                // Objeto só é criado uma vez e morre 
             services.AddScoped<IUserHelper, UserHelper>();
 
             // O objeto só é criado uma única vez

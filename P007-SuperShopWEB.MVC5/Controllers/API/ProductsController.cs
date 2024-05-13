@@ -8,6 +8,7 @@ namespace P007_SuperShopWEB.MVC5.Controllers.API
     [ApiController]
     public class ProductsController : Controller
     {
+
         private readonly IProductRepository _productRepository;
 
         public ProductsController(IProductRepository productRepository)
@@ -18,8 +19,8 @@ namespace P007_SuperShopWEB.MVC5.Controllers.API
         [HttpGet]
         public IActionResult GetProducts()
         {
-            return Ok(_productRepository.GetAll());  
+            //return Ok(_productRepository.GetAll());
+            return Ok(_productRepository.GetAllWithUser());
         }
-
     }
 }

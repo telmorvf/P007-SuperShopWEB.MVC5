@@ -29,8 +29,21 @@ namespace P007_SuperShopWEB.MVC5.Data.Entities
 
         [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
         public double Stock { get; set; }
+
         public User User { get; set; }
- 
-    
+
+        public string ImageFile
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(ImageUrl))
+                {
+                    return null;
+                }
+                return $"https://localhost:44313{ImageUrl.Substring(1)}";
+            }
+
+        }
+
     }
 }
