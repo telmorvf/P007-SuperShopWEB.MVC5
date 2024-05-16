@@ -1,0 +1,85 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appService_SuperShopMVC5_name": {
+      "type": "string"
+    },
+    "appServicePlan_GlobalPlan_location": {
+      "type": "string"
+    },
+    "appServicePlan_GlobalPlan_name": {
+      "type": "string"
+    },
+    "currentStack": {
+      "type": "string"
+    },
+    "appServicePlan_GlobalPlan_skuName": {
+      "type": "string"
+    },
+    "appServicePlan_GlobalPlan_skuTier": {
+      "type": "string"
+    },
+    "appServicePlan_GlobalPlan_skuFamily": {
+      "type": "string"
+    },
+    "appServicePlan_GlobalPlan_skuSize": {
+      "type": "string"
+    },
+    "appServicePlan_GlobalPlan_workerSizeId": {
+      "type": "int"
+    }
+  },
+  "resources": [
+    {
+      "location": "[parameters('appServicePlan_GlobalPlan_location')]",
+      "name": "[parameters('appService_SuperShopMVC5_name')]",
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2018-02-01",
+      "tags": {
+        "[concat('hidden-related:', resourceId('Microsoft.Web/serverFarms', parameters('appServicePlan_GlobalPlan_name')))]": "empty"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlan_GlobalPlan_name'))]"
+      ],
+      "kind": "app",
+      "properties": {
+        "name": "[parameters('appService_SuperShopMVC5_name')]",
+        "httpsOnly": true,
+        "reserved": false,
+        "serverFarmId": "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlan_GlobalPlan_name'))]",
+        "siteConfig": {
+          "netFrameworkVersion": "v5.0",
+          "ftpsState": "FtpsOnly",
+          "metadata": [
+            {
+              "name": "CURRENT_STACK",
+              "value": "[parameters('currentStack')]"
+            }
+          ]
+        }
+      },
+      "identity": {
+        "type": "SystemAssigned"
+      }
+    },
+    {
+      "location": "[parameters('appServicePlan_GlobalPlan_location')]",
+      "name": "[parameters('appServicePlan_GlobalPlan_name')]",
+      "type": "Microsoft.Web/serverFarms",
+      "apiVersion": "2018-02-01",
+      "kind": "",
+      "sku": {
+        "Name": "[parameters('appServicePlan_GlobalPlan_skuName')]",
+        "Tier": "[parameters('appServicePlan_GlobalPlan_skuTier')]"
+      },
+      "properties": {
+        "name": "[parameters('appServicePlan_GlobalPlan_name')]",
+        "workerSize": "[parameters('appServicePlan_GlobalPlan_workerSizeId')]",
+        "workerSizeId": "[parameters('appServicePlan_GlobalPlan_workerSizeId')]",
+        "numberOfWorkers": "1",
+        "reserved": false
+      }
+    }
+  ]
+}
