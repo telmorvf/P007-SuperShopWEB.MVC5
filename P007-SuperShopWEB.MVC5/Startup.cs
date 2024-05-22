@@ -14,6 +14,10 @@ using P007_SuperShopWEB.MVC5.Data;
 using P007_SuperShopWEB.MVC5.Data.Entities;
 using P007_SuperShopWEB.MVC5.Data.Repositories;
 using P007_SuperShopWEB.MVC5.Helpers;
+using Microsoft.Extensions.Azure;
+using Azure.Storage.Queues;
+using Azure.Storage.Blobs;
+using Azure.Core.Extensions;
 
 
 namespace P007_SuperShopWEB.MVC5
@@ -49,8 +53,9 @@ namespace P007_SuperShopWEB.MVC5
 
             services.AddTransient<SeedDb>();                                // Objeto só é criado uma vez e morre 
             services.AddScoped<IUserHelper, UserHelper>();
-            services.AddScoped<IImageHelper, ImageHelper>();
+            services.AddScoped<IBlobHelper, BlobHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();
+
 
             // O objeto só é criado uma única vez
             services.AddScoped<IProductRepository, ProductRepository>();   // Objeto é criado e apagado n vezes

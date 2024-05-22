@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis;
 using P007_SuperShopWEB.MVC5.Data.Entities;
 using P007_SuperShopWEB.MVC5.Helpers;
 using System;
@@ -46,16 +47,16 @@ namespace P007_SuperShopWEB.MVC5.Data
 
             if (!_context.Products.Any())
             {
-                AddProduct("iPhone X", user);
-                AddProduct("Magic Mouse", user);
-                AddProduct("iWatch Series 4", user);
-                AddProduct("iPad Mini", user);
+                AddProduct("Apple-Airpods", user, "00000000-0000-0000-0000-000000000001");
+                AddProduct("iPad2-Back", user, "00000000-0000-0000-0000-000000000002");
+                AddProduct("iphone-11", user, "00000000-0000-0000-0000-000000000003");
+                AddProduct("Magic Socks", user, "00000000-0000-0000-0000-000000000004");
 
                 await _context.SaveChangesAsync();
             }
         }
 
-        private void AddProduct(string name,User user)
+        private void AddProduct(string name,User user, string guidImage)
         {
             _context.Products.Add(new Entities.Product
             {
@@ -63,7 +64,8 @@ namespace P007_SuperShopWEB.MVC5.Data
                 Price = _random.Next(1000),
                 IsAvailable = true,
                 Stock = _random.Next(100),
-                User = user
+                User = user,
+                ImageId = Guid.Parse(guidImage)
             });
         }
 

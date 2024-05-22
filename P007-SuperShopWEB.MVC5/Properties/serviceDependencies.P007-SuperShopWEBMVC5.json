@@ -6,6 +6,14 @@
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/global-serverdb/databases/SuperShopMVC5_db",
       "type": "mssql.azure",
       "connectionId": "ConnectionStrings:DefaultConnection"
+    },
+    "storage1": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/P007-SuperShopWEBMVC5/providers/Microsoft.ServiceLinker/linkers/BlobConnectionString_FE3098F85A, /subscriptions/5539ab0c-4686-488d-8950-2ca3266f309d/resourceGroups/Global_ResourceGroup/providers/Microsoft.Web/sites/P007-SuperShopWEBMVC5/providers/Microsoft.ServiceLinker/linkers/BlobConnectionString_3EE8A829EE",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Storage/storageAccounts/supershopmvc5",
+      "type": "storage.azure",
+      "connectionId": "Blob:ConnectionString",
+      "dynamicId": null
     }
   }
 }
