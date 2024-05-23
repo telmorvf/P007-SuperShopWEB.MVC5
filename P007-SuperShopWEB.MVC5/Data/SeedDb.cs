@@ -38,7 +38,7 @@ namespace P007_SuperShopWEB.MVC5.Data
                     PhoneNumber = "1234567890"
 
                 };
-                var result = await _userHelper.AddUserAsync(user,"Pass0rd");
+                var result = await _userHelper.AddUserAsync(user,"Passw0rd");
                 if(result != IdentityResult.Success) 
                 {
                     throw new InvalidOperationException("Could not create the user in the Seeder");
