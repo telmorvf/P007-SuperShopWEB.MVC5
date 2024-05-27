@@ -73,6 +73,8 @@ namespace P007_SuperShopWEB.MVC5.Controllers
                         UserName = model.Username
                     };
 
+                    //TODO: Add Role CUSTOMER
+
                     var result = await _userHelper.AddUserAsync(user, model.Password);
                     if (result != IdentityResult.Success)
                     {

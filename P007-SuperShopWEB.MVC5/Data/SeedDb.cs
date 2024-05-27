@@ -25,8 +25,10 @@ namespace P007_SuperShopWEB.MVC5.Data
         {
             await _context.Database.EnsureCreatedAsync();
 
-            var user = await _userHelper.GetUserByEmailAsync("telmorf@yopmail.com");
+            await _userHelper.CheckRoleAsync("Admin");
+            await _userHelper.CheckRoleAsync("Customer");
 
+            var user = await _userHelper.GetUserByEmailAsync("telmorf@yopmail.com");
             if(user == null)
             {
                 user = new User
@@ -43,6 +45,14 @@ namespace P007_SuperShopWEB.MVC5.Data
                 {
                     throw new InvalidOperationException("Could not create the user in the Seeder");
                 }
+
+                await _userHelper.AddUserToRoleAsync(user, "Admin");
+            }
+
+            var isInRole = await _userHelper.IsUserInRoleAsync(user, "Admin");
+            if (!isInRole)
+            {
+                await _userHelper.AddUserToRoleAsync(user, "Admin");
             }
 
             if (!_context.Products.Any())
