@@ -149,7 +149,6 @@ namespace P007_SuperShopWEB.MVC5.Controllers
             return View(model);
         }
 
-
         public IActionResult ChangePassword()
         {
             return View();
@@ -182,5 +181,11 @@ namespace P007_SuperShopWEB.MVC5.Controllers
 
             return this.View(model);
         }
+    
+        public IActionResult NotAuthorized()
+        {
+            return View();
+        }
+    
     }
 }

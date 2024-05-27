@@ -62,6 +62,13 @@ namespace P007_SuperShopWEB.MVC5
             //services.AddScoped<IRepository, MockRepository>();            // troco rapidamente o repositorio
             //services.AddSingleton<>                                       // Objeto fica sempre criado
 
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/NotAuthorized";
+                options.AccessDeniedPath = "/Account/NotAuthorized";
+            });
+
             services.AddControllersWithViews();
         }
 
@@ -78,6 +85,11 @@ namespace P007_SuperShopWEB.MVC5
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            // if page not found, find erros bláblá
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

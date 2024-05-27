@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using P007_SuperShopWEB.MVC5.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace P007_SuperShopWEB.MVC5.Controllers
 {
@@ -33,5 +30,13 @@ namespace P007_SuperShopWEB.MVC5.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-    }
+
+        [Route("error/404")]
+        public IActionResult Error404()
+        {
+            return View();
+        }
+    } 
+
 }
+
