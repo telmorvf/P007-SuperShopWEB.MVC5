@@ -7,7 +7,9 @@
 <h1>Lista de Produtos</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a asp-action="Create" class="btn btn-primary"> 
+        <i class="fa fa-save"></i> Create New
+    </a>
 </p>
 <table class="table">
     <thead>
@@ -71,9 +73,14 @@
             </td>
 
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">
+                    <i class="fa fa-pen"></i> Edit</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">
+                        <i class="far fa-file-alt"></i> Details
+                    </a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">
+                        <i class="fas fa-eraser"></i> Delete
+                    </a>
             </td>
         </tr>
 }
