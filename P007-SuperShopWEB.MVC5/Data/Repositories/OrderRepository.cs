@@ -61,6 +61,18 @@ namespace P007_SuperShopWEB.MVC5.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task DeleteDetailTempAsync(int id)
+        {
+            var orderDetailTemp = await _context.OrderDetailTemp.FindAsync(id);
+            if(orderDetailTemp == null)
+            {
+                return;
+            }
+
+            _context.OrderDetailTemp.Remove(orderDetailTemp);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<IQueryable<OrderDetailTemp>> GetDetailTempsAsync(string userName)
         {
             var user = await _userHelper.GetUserByEmailAsync(userName);
