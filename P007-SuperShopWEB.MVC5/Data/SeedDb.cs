@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using P007_SuperShopWEB.MVC5.Data.Entities;
 using P007_SuperShopWEB.MVC5.Helpers;
 using System;
@@ -23,7 +24,8 @@ namespace P007_SuperShopWEB.MVC5.Data
 
         public async Task SeedAsync()
         {
-            await _context.Database.EnsureCreatedAsync();
+            //await _context.Database.EnsureCreatedAsync();     // Only create
+            await _context.Database.MigrateAsync();             // Create and Migrate
 
             await _userHelper.CheckRoleAsync("Admin");
             await _userHelper.CheckRoleAsync("Customer");
