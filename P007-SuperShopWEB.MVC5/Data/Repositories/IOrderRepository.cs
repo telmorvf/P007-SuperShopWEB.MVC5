@@ -1,6 +1,8 @@
 ﻿using P007_SuperShopWEB.MVC5.Data.Entities;
 using System.Linq;
 using System.Threading.Tasks;
+using P007_SuperShopWEB.MVC5.Models;
+
 
 namespace P007_SuperShopWEB.MVC5.Data.Repositories
 {
@@ -8,11 +10,11 @@ namespace P007_SuperShopWEB.MVC5.Data.Repositories
     {
         Task<IQueryable<Order>> GetOrderAsync(string userName);
 
-        //Task<IQueryable<OrderDetailTemp>> GetDetailTempsAsync(string userName);
+        Task<IQueryable<OrderDetailTemp>> GetDetailTempsAsync(string userName);
 
-        //Task AddItemToOrderAsync(AddItemViewModel model, string userName);
+        Task AddItemToOrderAsync(AddItemViewModel model, string userName);
 
-        //Task ModifyOrderDetailTempQuantityAsync(int id, double quantity);
+        Task ModifyOrderDetailTempQuantityAsync(int id, double quantity);
 
         //Task DeleteDetailTempAsync(int id);
 
