@@ -18,7 +18,7 @@ namespace P007_SuperShopWEB.MVC5.Data.Repositories
 
         Task DeleteDetailTempAsync(int id);
 
-        //Task<bool> ConfirmOrderAsync(string userName);
+        Task<bool> ConfirmOrderAsync(string userName);
 
         //Task DeliverOrder(DeliveryViewModel model);
 

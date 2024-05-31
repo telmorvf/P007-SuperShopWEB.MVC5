@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using P007_SuperShopWEB.MVC5.Data.Entities;
@@ -59,6 +60,50 @@ namespace P007_SuperShopWEB.MVC5.Data.Repositories
             }
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> ConfirmOrderAsync(string userName)
+        {
+            var user = await _userHelper.GetUserByEmailAsync(userName);
+            if (user == null)
+            {
+                return false;
+            }
+
+            var orderTmps =
+                await _context.OrderDetailTemp
+                .Include(o => o.Product)
+                .Where(o => o.User == user)
+                .ToListAsync();
+
+            if (orderTmps == null || orderTmps.Count == 0)
+            {
+                return false;
+            }
+
+            var details =
+                orderTmps
+                .Select(o => new OrderDetail
+                {
+                    Price = o.Price,
+                    Product = o.Product,
+                    Quantity = o.Quantity
+                })
+                .ToList();
+
+            var order = new Order
+            {
+                OrderDate = DateTime.UtcNow,
+                User = user,
+                Items = details
+            };
+
+            await CreateAsync(order);
+
+            _context.OrderDetailTemp.RemoveRange(orderTmps);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task DeleteDetailTempAsync(int id)
