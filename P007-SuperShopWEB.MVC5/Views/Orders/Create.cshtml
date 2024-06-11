@@ -99,7 +99,7 @@
             var id = 0;
 
             $("#btnConfirm").click(function () {
-                $("#confirmDialog").modal("l");
+                $("#confirmDialog").modal("show");
                 return false;
             });
 
@@ -112,8 +112,9 @@
                 window.location.href = "/Orders/ConfirmOrder";
             });
 
+
             $("a[id*=btnDeleteItem]").click(function () {
-                debugger;
+                //debugger;
                 id = $(this).parent()[0].id;
                 $("#deleteDialog").modal("show");
                 return false;
