@@ -62,6 +62,7 @@ namespace P007_SuperShopWEB.MVC5
             //services.AddSingleton<>                                       // Objeto fica sempre criado
             services.AddScoped<IProductRepository, ProductRepository>();   // Objeto é criado e apagado n vezes
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
 
             services.ConfigureApplicationCookie(options =>
             {
