@@ -11,12 +11,12 @@ namespace P007_SuperShopWEB.MVC5.Data.Entities
 
         [Required]
         [Display(Name = "Order date")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yy hh:mm tt}", ApplyFormatInEditMode = false)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy hh:mm tt}", ApplyFormatInEditMode = false)]
         public DateTime OrderDate { get; set; }
 
 
         [Display(Name = "Delivery date")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yy hh:mm tt}", ApplyFormatInEditMode = false)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime? DeliveryDate { get; set; }
 
 
@@ -40,7 +40,7 @@ namespace P007_SuperShopWEB.MVC5.Data.Entities
 
 
         [Display(Name = "Order date")]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy HH:mm}", ApplyFormatInEditMode = false)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy hh:mm tt}", ApplyFormatInEditMode = false)]
         public DateTime? OrderDateLocal =>
                 #pragma warning disable CS8073
             this.OrderDate == null

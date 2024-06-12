@@ -3,13 +3,14 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "font-awesome@5.14.0",
+      "provider": "cdnjs",
+      "library": "font-awesome@5.15.3",
       "destination": "wwwroot/lib/font-awesome/"
     },
     {
       "provider": "cdnjs",
-      "library": "font-awesome@5.15.3",
-      "destination": "wwwroot/lib/font-awesome/"
+      "library": "bootstrap-datepicker@1.9.0",
+      "destination": "wwwroot/lib/bootstrap-datepicker/"
     }
   ]
 }

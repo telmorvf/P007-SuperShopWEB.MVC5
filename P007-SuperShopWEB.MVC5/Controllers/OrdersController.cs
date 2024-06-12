@@ -1,9 +1,11 @@
-﻿using Azure.Storage.Blobs.Models;
+﻿using System;
+using System.Threading.Tasks;
+using Azure.Storage.Blobs.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using P007_SuperShopWEB.MVC5.Data.Repositories;
 using P007_SuperShopWEB.MVC5.Models;
-using System.Threading.Tasks;
+
 
 namespace P007_SuperShopWEB.MVC5.Controllers
 {
@@ -57,13 +59,13 @@ namespace P007_SuperShopWEB.MVC5.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> DeleleItem(int? id)
+        public async Task<IActionResult> DeleteItem(int? id)
         {
-            if(id== null)
+            if (id == null)
             {
                 return NotFound();
             }
-        
+
             await _orderRepository.DeleteDetailTempAsync(id.Value);
             return RedirectToAction("Create");
         }
@@ -100,6 +102,41 @@ namespace P007_SuperShopWEB.MVC5.Controllers
 
             return RedirectToAction("Create");
         }
+
+        public async Task<IActionResult> Deliver(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var order = await _orderRepository.GetOrderAsync(id.Value);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            var model = new DeliveryViewModel
+            {
+                Id = order.Id,
+                DeliveryDate = DateTime.Today
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Deliver(DeliveryViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _orderRepository.DeliverOrder(model);
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
 
     }
 }

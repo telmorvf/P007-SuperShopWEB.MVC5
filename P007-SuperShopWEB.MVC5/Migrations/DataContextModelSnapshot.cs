@@ -186,6 +186,9 @@ namespace P007_SuperShopWEB.MVC5.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Countries");
                 });
 

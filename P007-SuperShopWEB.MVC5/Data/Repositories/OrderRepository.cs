@@ -109,12 +109,25 @@ namespace P007_SuperShopWEB.MVC5.Data.Repositories
         public async Task DeleteDetailTempAsync(int id)
         {
             var orderDetailTemp = await _context.OrderDetailTemp.FindAsync(id);
-            if(orderDetailTemp == null)
+            if (orderDetailTemp == null)
             {
                 return;
             }
 
             _context.OrderDetailTemp.Remove(orderDetailTemp);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeliverOrder(DeliveryViewModel model)
+        {
+            var order = await _context.Orders.FindAsync(model.Id);
+            if (order == null)
+            {
+                return;
+            }
+
+            order.DeliveryDate = model.DeliveryDate;
+            _context.Orders.Update(order);
             await _context.SaveChangesAsync();
         }
 
@@ -154,6 +167,11 @@ namespace P007_SuperShopWEB.MVC5.Data.Repositories
                 .ThenInclude(p => p.Product)
                 .Where(o => o.User == user)
                 .OrderByDescending(o => o.OrderDate);
+        }
+
+        public async Task<Order> GetOrderAsync(int id)
+        {
+            return await _context.Orders.FindAsync(id);
         }
 
         public async Task ModifyOrderDetailTempQuantityAsync(int id, double quantity)

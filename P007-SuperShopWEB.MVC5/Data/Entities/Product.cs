@@ -25,11 +25,13 @@ namespace P007_SuperShopWEB.MVC5.Data.Entities
 
 
         [Display(Name = "Last Purchase")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy tt}", ApplyFormatInEditMode = false)]
         //tem ? = Datas opcionais
         public DateTime? LastPurchase { get; set; }
 
 
         [Display(Name = "Last Sale")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy tt}", ApplyFormatInEditMode = false)]
         //tem ? = Datas opcionais
         public DateTime? LastSale { get; set; }
 

@@ -20,8 +20,8 @@ namespace P007_SuperShopWEB.MVC5.Data.Repositories
 
         Task<bool> ConfirmOrderAsync(string userName);
 
-        //Task DeliverOrder(DeliveryViewModel model);
+        Task DeliverOrder(DeliveryViewModel model);
 
-        //Task<Order> GetOrderAsync(int id);
+        Task<Order> GetOrderAsync(int id);
     }
 }
