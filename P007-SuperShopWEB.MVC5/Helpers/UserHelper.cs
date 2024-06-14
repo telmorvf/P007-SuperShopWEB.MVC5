@@ -82,6 +82,15 @@ namespace P007_SuperShopWEB.MVC5.Helpers
             return await _userManager.UpdateAsync(user);
         }
 
+        public async Task<SignInResult> ValidatePasswordAsync(User user, string password)
+        {
+            return await _signInManager.CheckPasswordSignInAsync(
+                user,
+                password,
+                false); 
+            // TODO - Passar a true aquando da passagem a produção e nr. tentativas nos services
+        }
+
 
     }
 }

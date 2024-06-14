@@ -18,6 +18,8 @@ using Microsoft.Extensions.Azure;
 using Azure.Storage.Queues;
 using Azure.Storage.Blobs;
 using Azure.Core.Extensions;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 
 namespace P007_SuperShopWEB.MVC5
@@ -45,7 +47,20 @@ namespace P007_SuperShopWEB.MVC5
                 cfg.Password.RequiredLength = 6;
             })
               .AddEntityFrameworkStores<DataContext>();
-            
+
+            services.AddAuthentication()
+                .AddCookie()
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = this.Configuration["Tokens:Issuer"],
+                        ValidAudience = this.Configuration["Tokens:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(this.Configuration["Tokens:Key"]))
+                    };
+                });
+
             services.AddDbContext<DataContext>(cfg =>
             {
                 cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
