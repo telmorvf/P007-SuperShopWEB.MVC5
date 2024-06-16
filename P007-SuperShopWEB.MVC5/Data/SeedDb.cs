@@ -72,6 +72,10 @@ namespace P007_SuperShopWEB.MVC5.Data
                 }
 
                 await _userHelper.AddUserToRoleAsync(user, "Admin");
+
+                //Add Token Automático
+                var token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);    // Pedido de Token
+                await _userHelper.ConfirmEmailAsync(user, token);                           // Confirma Token ao user
             }
 
             var isInRole = await _userHelper.IsUserInRoleAsync(user, "Admin");

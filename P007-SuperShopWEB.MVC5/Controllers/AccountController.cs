@@ -19,16 +19,19 @@ namespace P007_SuperShopWEB.MVC5.Controllers
     public class AccountController : Controller
     {
         private readonly IUserHelper _userHelper;
+        private readonly IMailHelper _mailHelper;
         private readonly ICountryRepository _countryRepository;
         private readonly IConfiguration _configuration;
 
         public AccountController(
             IUserHelper userHelper,
+            IMailHelper mailHelper,
             ICountryRepository countryRepository,
             IConfiguration configuration    // para aceder ao appsettings.json
             )
         {
             _userHelper = userHelper;
+            _mailHelper = mailHelper;
             _countryRepository = countryRepository;
             _configuration = configuration;
         }
@@ -110,20 +113,41 @@ namespace P007_SuperShopWEB.MVC5.Controllers
                         return View(model);
                     }
 
-                    var loginViewModel = new LoginViewModel
+                    // Adiciona o user à Role
+                    await _userHelper.AddUserToRoleAsync(user, "Customer");
+                    var isInRole = await _userHelper.IsUserInRoleAsync(user, "Customer");
+                    if (!isInRole)
                     {
-                        Password = model.Password,
-                        RememberMe = false,
-                        UserName = model.Username
-                    };
-
-                    var result2 = await _userHelper.LoginAsync(loginViewModel);
-                    if (result2.Succeeded)
-                    {
-                        return RedirectToAction("Index", "Home");
+                        await _userHelper.AddUserToRoleAsync(user, "Customer");
                     }
+                    else if (!isInRole)
+                    {
+                        ModelState.AddModelError(string.Empty, "The role couldn't be add to the user.");
+                        return View(model);
+                    }
+                    // Fim de Adiciona a Role
 
-                    ModelState.AddModelError(string.Empty, "The user couldn't be logged");
+                    // Mail de Confirmação
+                    string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                    string tokenLink = Url.Action("ConfirmEmail", "Account", new
+                    {
+                        userid = user.Id,
+                        token = myToken
+                    }, protocol: HttpContext.Request.Scheme);
+
+                    Response response = await 
+                    _mailHelper.SendEmailAsync(model.Username, "Email confirmation", $"<h1>Email Confirmation</h1>" +
+                        $"To allow the user, " +
+                        $"plase click in this link:</br></br><a href = \"{tokenLink}\">Confirm Email</a>");
+
+                    if (response.IsSuccess)
+                    {
+                        ViewBag.Message = "The instructions to allow you user has been sent to email";
+                        return View(model);
+                    }
+                    // Mail de Confirmação
+
+                    ModelState.AddModelError(string.Empty, "The user couldn't be Register.");
                 }
             }
 
@@ -268,7 +292,28 @@ namespace P007_SuperShopWEB.MVC5.Controllers
             return BadRequest();
         }
 
+        //MVC33 Registery, confirm email
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
+            {
+                return NotFound();
+            }
 
+            var user = await _userHelper.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _userHelper.ConfirmEmailAsync(user, token);
+            if (!result.Succeeded)
+            {
+                return NotFound();
+            }
+
+            return View();
+        }
 
         public IActionResult NotAuthorized()
         {

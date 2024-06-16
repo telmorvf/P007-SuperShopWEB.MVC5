@@ -20,7 +20,15 @@ namespace P007_SuperShopWEB.MVC5.Helpers
         Task AddUserToRoleAsync(User user, string roleName);
         Task<bool> IsUserInRoleAsync(User user, string roleName);
 
-        // Token
+        // MVC31 TokenAPI
         Task<SignInResult> ValidatePasswordAsync(User user, string password);
+
+
+        // MVC33 - Server Envio de Email
+        Task<string> GenerateEmailConfirmationTokenAsync(User user);        //gerar o Token
+
+        Task<IdentityResult> ConfirmEmailAsync(User user, string token);    // enviar o email
+
+        Task<User> GetUserByIdAsync(string userId);     // Envia o Id do User e Devolve o User
     }
 }

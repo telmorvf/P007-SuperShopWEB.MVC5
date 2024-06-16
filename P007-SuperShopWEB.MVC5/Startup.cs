@@ -36,8 +36,14 @@ namespace P007_SuperShopWEB.MVC5
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // usa a minha identity user e IdentityRole uso a do framework
+            // Em producao tenho de retirar estas excecoes, senao fica inseguro
             services.AddIdentity<User, IdentityRole>(cfg =>
             {
+                // estou a usar a minha Class user e nao a classe UseManagement Da IentityRole
+                cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+                cfg.SignIn.RequireConfirmedEmail = true;    // login so depois de confirmar por email
+
                 cfg.User.RequireUniqueEmail = true;
                 cfg.Password.RequireDigit = false;
                 cfg.Password.RequiredUniqueChars = 0;
@@ -46,7 +52,8 @@ namespace P007_SuperShopWEB.MVC5
                 cfg.Password.RequireNonAlphanumeric = false;
                 cfg.Password.RequiredLength = 6;
             })
-              .AddEntityFrameworkStores<DataContext>();
+            .AddDefaultTokenProviders()
+            .AddEntityFrameworkStores<DataContext>();
 
             services.AddAuthentication()
                 .AddCookie()
@@ -70,7 +77,7 @@ namespace P007_SuperShopWEB.MVC5
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<IBlobHelper, BlobHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();
-
+            services.AddScoped<IMailHelper, MailHelper>();
 
             // O objeto só é criado uma única vez
             //services.AddScoped<IRepository, MockRepository>();            // troco rapidamente o repositorio
