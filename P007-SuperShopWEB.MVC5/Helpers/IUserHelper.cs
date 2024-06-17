@@ -26,9 +26,11 @@ namespace P007_SuperShopWEB.MVC5.Helpers
 
         // MVC33 - Server Envio de Email
         Task<string> GenerateEmailConfirmationTokenAsync(User user);        //gerar o Token
-
         Task<IdentityResult> ConfirmEmailAsync(User user, string token);    // enviar o email
-
         Task<User> GetUserByIdAsync(string userId);     // Envia o Id do User e Devolve o User
+
+        // MVC34 Recovery and Reset user Password
+        Task<string> GeneratePasswordResetTokenAsync(User user);
+        Task<IdentityResult> ResetPasswordAsync(User user, string token, string password);
     }
 }

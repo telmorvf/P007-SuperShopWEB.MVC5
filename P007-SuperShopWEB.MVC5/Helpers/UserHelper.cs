@@ -65,6 +65,12 @@ namespace P007_SuperShopWEB.MVC5.Helpers
             return await _userManager.GenerateEmailConfirmationTokenAsync(user);
         }
 
+        // MVC34 1.ResetPassword Token
+        public async Task<string> GeneratePasswordResetTokenAsync(User user)
+        {
+            return await _userManager.GeneratePasswordResetTokenAsync(user);
+        }
+
         public async Task<User> GetUserByEmailAsync(string email)
         {
             return await _userManager.FindByEmailAsync(email);
@@ -93,6 +99,12 @@ namespace P007_SuperShopWEB.MVC5.Helpers
         public async Task LogoutAsync()
         {
             await _signInManager.SignOutAsync();
+        }
+
+        // MVC34 2.ResetPassword
+        public async Task<IdentityResult> ResetPasswordAsync(User user, string token, string password)
+        {
+            return await _userManager.ResetPasswordAsync(user, token, password);
         }
 
         public async Task<IdentityResult> UpdateUserAsync(User user)

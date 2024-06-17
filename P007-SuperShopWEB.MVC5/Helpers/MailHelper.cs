@@ -25,13 +25,6 @@ namespace P007_SuperShopWEB.MVC5.Helpers
 
         public async Task<Response> SendEmailAsync(string to, string subject, string body)
         {
-            //"NameFrom": "Telmo Admin",
-            //"Smtp": "smtp.gmail.com",
-            //"Port": "587",
-            //"From": "telmorf.email@gmail.com",
-            //"Password": "tqayzsqshhiuehkf",
-            //"EnableSsl":  true
-
             var nameFrom = _configuration["Mail:NameFrom"];
             var from = _configuration["Mail:From"];
             var smtp = _configuration["Mail:Smtp"];
@@ -39,7 +32,7 @@ namespace P007_SuperShopWEB.MVC5.Helpers
             var password = _configuration["Mail:Password"];
 
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress(nameFrom, from)); // Telmo Admin, telmorf.email@gmail.com
+            message.From.Add(new MailboxAddress(nameFrom, from));
             message.To.Add(new MailboxAddress(to, to));
             message.Subject = subject;
 
@@ -57,7 +50,7 @@ namespace P007_SuperShopWEB.MVC5.Helpers
                 // what is MIME - Multipurpose Internet Mail Extensions
                 // client.Connect(smtp, int.Parse(port), false);
                 client.CheckCertificateRevocation = false;
-                await client.ConnectAsync("smtp.gmail.com", 465, true);
+                await client.ConnectAsync(smtp, int.Parse(port), true);
                 await client.AuthenticateAsync(from, password);
                 await client.SendAsync(message);
             }
