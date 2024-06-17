@@ -36,11 +36,9 @@ namespace P007_SuperShopWEB.MVC5.Data
                 .Property(p => p.Price)
                 .HasColumnType("decimal(18,2)");
 
-
             modelBuilder.Entity<OrderDetailTemp>()
                .Property(p => p.Price)
                .HasColumnType("decimal(18,2)");
-
 
             modelBuilder.Entity<OrderDetail>()
               .Property(p => p.Price)
