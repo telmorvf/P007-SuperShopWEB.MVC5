@@ -7,6 +7,7 @@ using P007_SuperShopWEB.MVC5.Data.Entities;
 using P007_SuperShopWEB.MVC5.Data;
 using P007_SuperShopWEB.MVC5.Models;
 using P007_SuperShopWEB.MVC5.Data.Repositories;
+using Vereyon.Web;
 
 
 namespace P007_SuperShopWEB.MVC5.Controllers
@@ -15,12 +16,15 @@ namespace P007_SuperShopWEB.MVC5.Controllers
     public class CountriesController : Controller
     {
         private readonly ICountryRepository _countryRepository;
+        private readonly IFlashMessage _flashMessage;
 
         public CountriesController(
-            ICountryRepository countryRepository
+            ICountryRepository countryRepository,
+            IFlashMessage flashMessage
             )
         {
             _countryRepository = countryRepository;
+            _flashMessage = flashMessage;
         }
 
         public IActionResult Index()
@@ -118,11 +122,12 @@ namespace P007_SuperShopWEB.MVC5.Controllers
                 try
                 {
                     await _countryRepository.CreateAsync(country);
-                    return RedirectToAction(nameof(Index));
+                    _flashMessage.Confirmation($"The country {country.Name} has been created!", "Success!");
+                    //return RedirectToAction(nameof(Index));
                 }
                 catch (Exception)
                 {
-                    //_flashMessage.Warning("This country already exist!", "Atention!");
+                    _flashMessage.Warning("This country already exist!", "Atention!");
                 }
 
                 return View(country);

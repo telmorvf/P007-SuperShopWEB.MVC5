@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,12 +11,7 @@ using P007_SuperShopWEB.MVC5.Data;
 using P007_SuperShopWEB.MVC5.Data.Entities;
 using P007_SuperShopWEB.MVC5.Data.Repositories;
 using P007_SuperShopWEB.MVC5.Helpers;
-using Microsoft.Extensions.Azure;
-using Azure.Storage.Queues;
-using Azure.Storage.Blobs;
-using Azure.Core.Extensions;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using Vereyon.Web;
 
 
 namespace P007_SuperShopWEB.MVC5
@@ -72,6 +64,8 @@ namespace P007_SuperShopWEB.MVC5
             {
                 cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddFlashMessage();
 
             services.AddTransient<SeedDb>();                                // Objeto só é criado uma vez e morre 
             services.AddScoped<IUserHelper, UserHelper>();
